@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  db:
+    image: bitnami/postgresql
+    restart: always
+    tty: true
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PWD}
+      - POSTGRES_DATABASE=${DB_NAME}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    volumes:
+      - ./postgres:/bitnami
+    networks:
+      - db-network
+
+  db-admin:
+    image: "dpage/pgadmin4"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=testes@email.com
+      - PGADMIN_DEFAULT_PASSWORD=testes
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    tty: true
+    networks:
+      - db-network
+
+networks:
+  db-network:
+    driver: bridge
