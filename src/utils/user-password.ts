@@ -18,6 +18,23 @@ class UserPassword {
       });
     }
   }
+
+  static async comparePassword(password: string) {
+    try {
+      const hash = await this.generateHash(password);
+
+      const match = await bcrypt.compareSync(password, hash);
+
+      return match;
+    } catch (error) {
+      console.log(error);
+
+      throw new AppError({
+        message: "Error to decrypt password",
+        statusCode: 500,
+      });
+    }
+  }
 }
 
 export { UserPassword };
