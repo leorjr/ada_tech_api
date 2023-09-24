@@ -3,6 +3,7 @@ import { UserInput, UserOutput } from "../interfaces/user.interfaces";
 import { UserRepository } from "../repository/user-repository";
 import { UserPassword } from "../utils/user-password";
 import { UserToken } from "../utils/user-token";
+import { v4 as uuidv4 } from "uuid";
 
 class UserService {
   constructor(private userRepository: UserRepository) {}
@@ -17,6 +18,7 @@ class UserService {
     const passwordHashed = await UserPassword.generateHash(password);
 
     const user: UserOutput = await this.userRepository.create(
+      uuidv4(),
       login,
       passwordHashed
     );
