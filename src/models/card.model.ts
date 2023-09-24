@@ -14,11 +14,11 @@ const Card = db.define("cards", {
   },
   conteudo: {
     type: sequelize.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   lista: {
     type: sequelize.STRING,
-    allowNull: true,
+    allowNull: false,
   },
 });
 

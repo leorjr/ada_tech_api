@@ -16,11 +16,4 @@ userRoutes.post(
     UserController.login(request, response, next)
 );
 
-userRoutes.get(
-  "/teste",
-  validateToken,
-  (request: Request, response: Response, next: NextFunction) =>
-    UserController.testeRotaProtegida(request, response, next)
-);
-
 export { userRoutes };

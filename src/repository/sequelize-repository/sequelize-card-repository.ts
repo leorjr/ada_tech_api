@@ -7,6 +7,16 @@ class SequelizeCardRepository implements CardRepository {
     const cards = await Card.findAll();
     return cards;
   }
+
+  async createACard(
+    id: string,
+    titulo: string,
+    conteudo: string,
+    lista: string
+  ): Promise<any> {
+    const card = await Card.create({ id, titulo, conteudo, lista });
+    return card;
+  }
 }
 
 export { SequelizeCardRepository };

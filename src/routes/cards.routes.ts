@@ -11,4 +11,11 @@ cardRoutes.get(
     CardController.listAll(request, response, next)
 );
 
+cardRoutes.post(
+  "/",
+  validateToken,
+  (request: Request, response: Response, next: NextFunction) =>
+    CardController.create(request, response, next)
+);
+
 export { cardRoutes };

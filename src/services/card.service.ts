@@ -13,6 +13,17 @@ class CardService {
 
     return cards;
   }
+
+  async createACard(titulo: string, conteudo: string, lista: string) {
+    const card = await this.cardRepository.createACard(
+      uuidv4(),
+      titulo,
+      conteudo,
+      lista
+    );
+
+    return card;
+  }
 }
 
 export { CardService };
