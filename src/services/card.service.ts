@@ -15,6 +15,12 @@ class CardService {
   }
 
   async createACard(titulo: string, conteudo: string, lista: string) {
+    const cardExists = await this.cardRepository.findCardByTitle(titulo);
+
+    if (cardExists) {
+      throw new AppError({ message: "Card Already Exists", statusCode: 401 });
+    }
+
     const card = await this.cardRepository.createACard(
       uuidv4(),
       titulo,

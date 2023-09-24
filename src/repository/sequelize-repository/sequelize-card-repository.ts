@@ -3,7 +3,12 @@ import { User } from "../../models/user.model";
 import { CardRepository } from "../card-repository";
 
 class SequelizeCardRepository implements CardRepository {
-  async listAll(): Promise<any> {
+  async findCardByTitle(titulo: string) {
+    const card = await Card.findOne({ where: { titulo } });
+    return card;
+  }
+
+  async listAll() {
     const cards = await Card.findAll();
     return cards;
   }
