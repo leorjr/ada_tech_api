@@ -45,6 +45,14 @@ class UserController {
       next(error);
     }
   }
+
+  static async testeRotaProtegida(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    response.status(200).json({ message: "passou na rota protegida" });
+  }
 }
 
 export { UserController };
