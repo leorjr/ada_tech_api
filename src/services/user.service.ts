@@ -1,9 +1,5 @@
 import { AppError } from "../errors/app-error";
-import bcrypt from "bcrypt";
-import {
-  UserInput,
-  UserRepositoryInterface,
-} from "../interfaces/user.respository.interface";
+import { UserInput, UserOutput } from "../interfaces/user.interfaces";
 import { UserRepository } from "../repository/user-repository";
 import { UserPassword } from "../utils/user-password";
 import { UserToken } from "../utils/user-token";
@@ -12,27 +8,33 @@ class UserService {
   constructor(private userRepository: UserRepository) {}
 
   async registerUser(login: string, password: string) {
-    const userExists = await this.findUserByLogin(login);
+    const userResponse: UserOutput | null = await this.findUserByLogin(login);
 
-    if (userExists) {
+    if (userResponse) {
       throw new AppError({ message: "User Already Exists", statusCode: 401 });
     }
 
     const passwordHashed = await UserPassword.generateHash(password);
 
-    const user = await this.userRepository.create(login, passwordHashed);
+    const user: UserOutput = await this.userRepository.create(
+      login,
+      passwordHashed
+    );
 
     return user;
   }
 
-  async login(login: string, password: string) {
-    const user = await this.findUserByLogin(login);
+  async login({ login, password }: UserInput) {
+    const userResponse: UserOutput | null = await this.findUserByLogin(login);
 
-    if (!user) {
+    if (!userResponse) {
       throw new AppError({ message: "User Not Found", statusCode: 401 });
     }
 
-    const matchPassword = await UserPassword.comparePassword(password);
+    const matchPassword = await UserPassword.comparePassword(
+      password,
+      userResponse.password
+    );
 
     if (!matchPassword) {
       throw new AppError({
@@ -41,20 +43,16 @@ class UserService {
       });
     }
 
-    const { login: loginUser, id } = user;
+    const token: string = UserToken.generate(login);
 
-    const token = UserToken.generate({ loginUser, id });
-
-    return {
-      token,
-      user,
-    };
+    return token;
   }
 
-  async findUserByLogin(login: any) {
-    const user = await this.userRepository.findUserByLogin(login);
+  async findUserByLogin(login: string) {
+    const userResponse: UserOutput | null =
+      await this.userRepository.findUserByLogin(login);
 
-    return user;
+    return userResponse;
   }
 }
 

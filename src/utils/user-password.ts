@@ -19,11 +19,9 @@ class UserPassword {
     }
   }
 
-  static async comparePassword(password: string) {
+  static async comparePassword(password: string, passwordHashed: string) {
     try {
-      const hash = await this.generateHash(password);
-
-      const match = await bcrypt.compareSync(password, hash);
+      const match = await bcrypt.compareSync(password, passwordHashed);
 
       return match;
     } catch (error) {

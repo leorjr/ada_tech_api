@@ -38,9 +38,7 @@ class UserController {
     const userService = new UserService(userRepository);
 
     try {
-      const data = await userService.login(login, password);
-
-      const { token } = data;
+      const token = await userService.login({ login, password });
 
       response.status(200).json({ token });
     } catch (error) {
