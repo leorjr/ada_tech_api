@@ -1,22 +1,33 @@
-import express from "express";
 import "dotenv/config";
-import cors from "cors";
-import { router } from "./routes";
-import { db } from "./config/sequelize";
-import { errorHandler } from "./middlewares/error-handler.middleware";
+import { app } from "./app";
+import { db } from "./config/sequelize.config";
+import { appConfig } from "./config/app.config";
 
-const port = process.env.APP_PORT || 5000;
-const app = express();
-
-app.use(express.json());
-app.use(cors());
-app.use(router);
-
-app.use(errorHandler);
+const { port } = appConfig;
 
 app.listen(port, () => {
-  db.sync()
-    .then(() => console.log(`🎲 database is connected!`))
-    .catch((error) => console.log(`❌ error to connect database.`, error));
-  console.log(`🌎 server is running on http://localhost:${port}`);
+  console.log(`🌎 Server is running on http://localhost:${port}`);
+});
+
+db.sync()
+  .then(() => {
+    console.log(`🎲 Database is connected!`);
+  })
+  .catch((error) => {
+    console.error(`❌ Error to connect database: ${error}`);
+  });
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error(
+    "❌ Unhandled Promise Rejection at:",
+    promise,
+    "reason:",
+    reason
+  );
+  process.exit(1);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("❌ Uncaught Exception:", error);
+  process.exit(1);
 });
