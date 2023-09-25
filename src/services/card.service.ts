@@ -1,33 +1,33 @@
 import { AppError } from "../errors/app-error";
-import { UserInput, UserOutput } from "../interfaces/user.interfaces";
+import { Card } from "../interfaces/card.interfaces";
 import { CardRepository } from "../repository/card-repository";
-import { UserPassword } from "../utils/user-password";
-import { UserToken } from "../utils/user-token";
 import { v4 as uuidv4 } from "uuid";
 
 class CardService {
   constructor(private cardRepository: CardRepository) {}
 
-  async listAll() {
-    const cards = await this.cardRepository.listAll();
+  async list() {
+    const cards: Card[] | null = await this.cardRepository.list();
 
     return cards;
   }
 
   async getById(id: string) {
-    const cards = await this.cardRepository.getById(id);
+    const card: Card | null = await this.cardRepository.findById(id);
 
-    return cards;
+    return card;
   }
 
-  async createACard(titulo: string, conteudo: string, lista: string) {
-    const cardExists = await this.cardRepository.findCardByTitle(titulo);
+  async create(titulo: string, conteudo: string, lista: string) {
+    const cardExists: Card | null = await this.cardRepository.findByTitle(
+      titulo
+    );
 
     if (cardExists) {
       throw new AppError({ message: "Card Already Exists", statusCode: 401 });
     }
 
-    const card = await this.cardRepository.createACard(
+    const card: Card = await this.cardRepository.create(
       uuidv4(),
       titulo,
       conteudo,
@@ -37,25 +37,22 @@ class CardService {
     return card;
   }
 
-  async updateACard(
-    id: string,
-    titulo: string,
-    conteudo: string,
-    lista: string
-  ) {
-    const card = await this.cardRepository.getById(id);
+  async update(id: string, titulo: string, conteudo: string, lista: string) {
+    const card: Card | null = await this.cardRepository.findById(id);
 
     if (!card) {
       throw new AppError({ message: "Card not found", statusCode: 404 });
     }
 
-    const cardTitle = await this.cardRepository.findCardByTitle(titulo);
+    const cardTitle: Card | null = await this.cardRepository.findByTitle(
+      titulo
+    );
 
     if (cardTitle) {
       throw new AppError({ message: "Title Already Exists", statusCode: 401 });
     }
 
-    const cardUpdated = await this.cardRepository.update(
+    const cardUpdated: Card | null = await this.cardRepository.update(
       id,
       titulo,
       conteudo,
@@ -65,14 +62,15 @@ class CardService {
     return cardUpdated;
   }
 
-  async deleteACard(id: string) {
-    const card = await this.cardRepository.getById(id);
+  async delete(id: string) {
+    const card: Card | null = await this.cardRepository.findById(id);
 
     if (!card) {
       throw new AppError({ message: "Card not found", statusCode: 404 });
     }
 
-    const cardListWithoutCardRemoved = await this.cardRepository.delete(id);
+    const cardListWithoutCardRemoved: Card[] | null =
+      await this.cardRepository.delete(id);
 
     return cardListWithoutCardRemoved;
   }

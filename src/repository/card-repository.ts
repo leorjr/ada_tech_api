@@ -1,20 +1,22 @@
+import { Card } from "../interfaces/card.interfaces";
+
 interface CardRepository {
-  listAll(): Promise<any | null>;
-  getById(id: string): Promise<any | null>;
-  delete(id: string): Promise<any | null>;
-  createACard(
+  list(): Promise<any[] | null>;
+  findById(id: string): Promise<any | null>;
+  delete(id: string): Promise<any[] | null>;
+  create(
     id: string,
     titulo: string,
     conteudo: string,
     lista: string
   ): Promise<any | null>;
-  findCardByTitle(title: string): Promise<any | null>;
+  findByTitle(title: string): Promise<any | null>;
   update(
     id: string,
     titulo: string,
     conteudo: string,
     lista: string
-  ): Promise<any | null>;
+  ): Promise<Card | null>;
 }
 
 export { CardRepository };

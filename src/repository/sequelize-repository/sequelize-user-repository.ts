@@ -7,7 +7,7 @@ class SequelizeUserRepository implements UserRepository {
     return user;
   }
 
-  async findUserByLogin(login: string) {
+  async findByLogin(login: string) {
     const user = await User.findOne({ where: { login } });
     return user;
   }
