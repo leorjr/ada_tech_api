@@ -1,17 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { SequelizeCardRepository } from "../repository/sequelize-repository/sequelize-card-repository";
 import { CardService } from "../services/card.service";
 import { CardValidation } from "../utils/card-validation";
-
-const cardRepository = new SequelizeCardRepository();
+import { CardRepository } from "../repository/card-repository";
 
 class CardController {
-  static async listAll(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
-    const cardService = new CardService(cardRepository);
+  constructor(private cardRepository: CardRepository) {}
+  async listAll(request: Request, response: Response, next: NextFunction) {
+    const cardService = new CardService(this.cardRepository);
 
     try {
       const cards = await cardService.listAll();
@@ -22,17 +17,13 @@ class CardController {
     }
   }
 
-  static async create(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
+  async create(request: Request, response: Response, next: NextFunction) {
     if (!CardValidation.registerCardInput(request, response)) {
       return;
     }
 
     const { titulo, conteudo, lista } = request.body;
-    const cardService = new CardService(cardRepository);
+    const cardService = new CardService(this.cardRepository);
 
     try {
       const card = await cardService.createACard(titulo, conteudo, lista);
@@ -42,11 +33,7 @@ class CardController {
     }
   }
 
-  static async update(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
+  async update(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
 
     if (!CardValidation.registerCardInput(request, response)) {
@@ -55,7 +42,7 @@ class CardController {
 
     const { titulo, conteudo, lista } = request.body;
 
-    const cardService = new CardService(cardRepository);
+    const cardService = new CardService(this.cardRepository);
     try {
       const card = await cardService.updateACard(id, titulo, conteudo, lista);
       response.status(200).json(card);
@@ -64,14 +51,10 @@ class CardController {
     }
   }
 
-  static async delete(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
+  async delete(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
 
-    const cardService = new CardService(cardRepository);
+    const cardService = new CardService(this.cardRepository);
     try {
       const cardListWithoutCardRemoved = await cardService.deleteACard(id);
       response.status(200).json(cardListWithoutCardRemoved);

@@ -1,22 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import { UserService } from "../services/user.service";
-import { SequelizeUserRepository } from "../repository/sequelize-repository/sequelize-user-repository";
 import { UserValidation } from "../utils/user-validation";
-
-const userRepository = new SequelizeUserRepository();
+import { UserRepository } from "../repository/user-repository";
 
 class UserController {
-  static async registerUser(
-    request: Request,
-    response: Response,
-    next: NextFunction
-  ) {
+  constructor(private userRepository: UserRepository) {}
+  async registerUser(request: Request, response: Response, next: NextFunction) {
     if (!UserValidation.registerUserInput(request, response)) {
       return;
     }
 
     const { login, password } = request.body;
-    const userService = new UserService(userRepository);
+    const userService = new UserService(this.userRepository);
 
     try {
       await userService.registerUser(login, password);
@@ -26,13 +21,13 @@ class UserController {
     }
   }
 
-  static async login(request: Request, response: Response, next: NextFunction) {
+  async login(request: Request, response: Response, next: NextFunction) {
     if (!UserValidation.registerUserInput(request, response)) {
       return;
     }
 
     const { login, password } = request.body;
-    const userService = new UserService(userRepository);
+    const userService = new UserService(this.userRepository);
 
     try {
       const token = await userService.login({ login, password });

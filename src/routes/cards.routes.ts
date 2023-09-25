@@ -2,21 +2,24 @@ import express, { Request, Response, NextFunction } from "express";
 import { validateToken } from "../middlewares/validate-token.middleware";
 import { CardController } from "../controllers/card.controller";
 import { loggerMiddleware } from "../middlewares/log-handler.middleware";
+import { SequelizeCardRepository } from "../repository/sequelize-repository/sequelize-card-repository";
 
 const cardRoutes = express.Router();
+const cardRepository = new SequelizeCardRepository();
+const cardController = new CardController(cardRepository);
 
 cardRoutes.get(
   "/",
   validateToken,
   (request: Request, response: Response, next: NextFunction) =>
-    CardController.listAll(request, response, next)
+    cardController.listAll(request, response, next)
 );
 
 cardRoutes.post(
   "/",
   validateToken,
   (request: Request, response: Response, next: NextFunction) =>
-    CardController.create(request, response, next)
+    cardController.create(request, response, next)
 );
 
 cardRoutes.put(
@@ -24,7 +27,7 @@ cardRoutes.put(
   validateToken,
   loggerMiddleware,
   (request: Request, response: Response, next: NextFunction) =>
-    CardController.update(request, response, next)
+    cardController.update(request, response, next)
 );
 
 cardRoutes.delete(
@@ -32,7 +35,7 @@ cardRoutes.delete(
   validateToken,
   loggerMiddleware,
   (request: Request, response: Response, next: NextFunction) =>
-    CardController.delete(request, response, next)
+    cardController.delete(request, response, next)
 );
 
 export { cardRoutes };
