@@ -7,8 +7,6 @@ const errorHandler = (
   respose: Response,
   next: NextFunction
 ) => {
-  console.log(error);
-
   if (error instanceof AppError) {
     return respose.status(error.statusCode).json({ error: error.message });
   }

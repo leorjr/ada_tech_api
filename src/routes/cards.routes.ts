@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import { validateToken } from "../middlewares/validate-token.middleware";
 import { CardController } from "../controllers/card.controller";
+import { loggerMiddleware } from "../middlewares/log-handler.middleware";
 
 const cardRoutes = express.Router();
 
@@ -21,6 +22,7 @@ cardRoutes.post(
 cardRoutes.put(
   "/:id",
   validateToken,
+  loggerMiddleware,
   (request: Request, response: Response, next: NextFunction) =>
     CardController.update(request, response, next)
 );
@@ -28,6 +30,7 @@ cardRoutes.put(
 cardRoutes.delete(
   "/:id",
   validateToken,
+  loggerMiddleware,
   (request: Request, response: Response, next: NextFunction) =>
     CardController.delete(request, response, next)
 );
