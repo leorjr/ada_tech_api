@@ -1,12 +1,7 @@
-interface UserInput {
-  login: string;
-  password: string;
-}
-
-interface UserOutput {
+interface User {
   id: number;
   login: string;
   password: string;
 }
 
-export { UserInput, UserOutput };
+export { User };

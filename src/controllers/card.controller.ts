@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { CardService } from "../services/card.service";
 import { CardValidation } from "../utils/card-validation";
 import { CardRepository } from "../repository/card-repository";
+import { Card } from "../interfaces/card.interfaces";
 
 class CardController {
   constructor(private cardRepository: CardRepository) {}
@@ -9,7 +10,7 @@ class CardController {
     const cardService = new CardService(this.cardRepository);
 
     try {
-      const cards = await cardService.list();
+      const cards: Card[] | null = await cardService.list();
 
       response.status(200).json(cards);
     } catch (error) {
@@ -26,7 +27,7 @@ class CardController {
     const cardService = new CardService(this.cardRepository);
 
     try {
-      const card = await cardService.create(titulo, conteudo, lista);
+      const card: Card = await cardService.create(titulo, conteudo, lista);
       response.status(201).json(card);
     } catch (error) {
       next(error);
@@ -44,7 +45,12 @@ class CardController {
 
     const cardService = new CardService(this.cardRepository);
     try {
-      const card = await cardService.update(id, titulo, conteudo, lista);
+      const card: Card | null = await cardService.update(
+        id,
+        titulo,
+        conteudo,
+        lista
+      );
       response.status(200).json(card);
     } catch (error) {
       next(error);
@@ -56,7 +62,8 @@ class CardController {
 
     const cardService = new CardService(this.cardRepository);
     try {
-      const cardListWithoutCardRemoved = await cardService.delete(id);
+      const cardListWithoutCardRemoved: Card[] | null =
+        await cardService.delete(id);
       response.status(200).json(cardListWithoutCardRemoved);
     } catch (error) {
       next(error);
