@@ -23,7 +23,7 @@ class UserController {
 
     try {
       await userService.registerUser(login, password);
-      response.status(201).send();
+      response.status(201).json({ message: "User created!" });
     } catch (error) {
       next(error);
     }
