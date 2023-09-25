@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
 import { UserController } from "../controllers/user.controller";
-import { validateToken } from "../middlewares/validate-token.middleware";
 
 const userRoutes = express.Router();
 

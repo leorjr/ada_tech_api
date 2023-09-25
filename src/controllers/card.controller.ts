@@ -1,10 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { ZodError, z } from "zod";
-import { UserService } from "../services/user.service";
-import { SequelizeUserRepository } from "../repository/sequelize-repository/sequelize-user-repository";
-import { Error as SequelizeError } from "sequelize";
-import { AppError } from "../errors/app-error";
-import { UserValidation } from "../utils/user-validation";
 import { SequelizeCardRepository } from "../repository/sequelize-repository/sequelize-card-repository";
 import { CardService } from "../services/card.service";
 import { CardValidation } from "../utils/card-validation";

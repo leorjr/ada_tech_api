@@ -1,7 +1,5 @@
 import { Sequelize } from "sequelize";
 
-const URL = process.env.DATABASE_URL || "";
-
 const db = new Sequelize({
   username: process.env.DB_USER,
   password: process.env.DB_PWD,

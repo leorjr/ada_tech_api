@@ -1,9 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { ZodError, z } from "zod";
 import { UserService } from "../services/user.service";
 import { SequelizeUserRepository } from "../repository/sequelize-repository/sequelize-user-repository";
-import { Error as SequelizeError } from "sequelize";
-import { AppError } from "../errors/app-error";
 import { UserValidation } from "../utils/user-validation";
 
 const userRepository = new SequelizeUserRepository();
