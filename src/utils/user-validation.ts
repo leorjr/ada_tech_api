@@ -12,7 +12,7 @@ class UserValidation {
       registerUserBodySchema.parse(request.body);
     } catch (error) {
       if (error instanceof ZodError) {
-        response.status(401).json({ error: error.message });
+        response.status(400).json({ error: "necessário login e password" });
         return false;
       }
     }

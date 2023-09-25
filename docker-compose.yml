@@ -14,7 +14,7 @@ services:
     ports:
       - ${DB_PORT}:${DB_PORT}
     volumes:
-      - ./postgres:/bitnami
+      - ./postgres:/bitnami/postgresql
     networks:
       - db-network
 
