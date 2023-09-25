@@ -11,8 +11,24 @@ Como libs, temos Zod para validação das entradas, bcrypt, cors, date-fns, dote
 
 ### Como baixar e rodar o projeto localmente?
 
-Primeiro passo, é você baixar o repositório do projeto para seu ambiente local:
+1. Você deverá baixar o repositório do projeto para seu ambiente local:
 
 ```
     git clone https://github.com/leorjr/ada_tech_api
 ```
+
+2. No seu projeto, existe um arquivo chamado .env.example. Renomei-o para .env e, preencha as variáveis necessárias ao funcionamento do projeto;
+
+3. Necessário se certificar que você tem o docker e o docker compose instalado em sua máquina. Caso o tenha, você precisa rodar o seguinte comando para inicializar o banco de dados em um terminal:
+
+```
+    docker compose up
+```
+
+4. Com o banco de dados rodando em um terminal, você abre o segundo terminal/aba e inicia o servidor da aplicação:
+
+```
+    npm run dev
+```
+
+Seguindo estes passos, sua aplicação estará rodando em sua máquina e pronta para receber requisições.
