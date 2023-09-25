@@ -5,26 +5,26 @@ import { v4 as uuidv4 } from "uuid";
 class CardService {
   constructor(private cardRepository: CardRepository) {}
 
-  async listAll() {
-    const cards = await this.cardRepository.listAll();
+  async list() {
+    const cards = await this.cardRepository.list();
 
     return cards;
   }
 
   async getById(id: string) {
-    const cards = await this.cardRepository.getById(id);
+    const cards = await this.cardRepository.findById(id);
 
     return cards;
   }
 
-  async createACard(titulo: string, conteudo: string, lista: string) {
-    const cardExists = await this.cardRepository.findCardByTitle(titulo);
+  async create(titulo: string, conteudo: string, lista: string) {
+    const cardExists = await this.cardRepository.findByTitle(titulo);
 
     if (cardExists) {
       throw new AppError({ message: "Card Already Exists", statusCode: 401 });
     }
 
-    const card = await this.cardRepository.createACard(
+    const card = await this.cardRepository.create(
       uuidv4(),
       titulo,
       conteudo,
@@ -34,19 +34,14 @@ class CardService {
     return card;
   }
 
-  async updateACard(
-    id: string,
-    titulo: string,
-    conteudo: string,
-    lista: string
-  ) {
-    const card = await this.cardRepository.getById(id);
+  async update(id: string, titulo: string, conteudo: string, lista: string) {
+    const card = await this.cardRepository.findById(id);
 
     if (!card) {
       throw new AppError({ message: "Card not found", statusCode: 404 });
     }
 
-    const cardTitle = await this.cardRepository.findCardByTitle(titulo);
+    const cardTitle = await this.cardRepository.findByTitle(titulo);
 
     if (cardTitle) {
       throw new AppError({ message: "Title Already Exists", statusCode: 401 });
@@ -62,8 +57,8 @@ class CardService {
     return cardUpdated;
   }
 
-  async deleteACard(id: string) {
-    const card = await this.cardRepository.getById(id);
+  async delete(id: string) {
+    const card = await this.cardRepository.findById(id);
 
     if (!card) {
       throw new AppError({ message: "Card not found", statusCode: 404 });

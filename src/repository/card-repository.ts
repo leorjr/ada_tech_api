@@ -1,14 +1,14 @@
 interface CardRepository {
-  listAll(): Promise<any | null>;
-  getById(id: string): Promise<any | null>;
+  list(): Promise<any | null>;
+  findById(id: string): Promise<any | null>;
   delete(id: string): Promise<any | null>;
-  createACard(
+  create(
     id: string,
     titulo: string,
     conteudo: string,
     lista: string
   ): Promise<any | null>;
-  findCardByTitle(title: string): Promise<any | null>;
+  findByTitle(title: string): Promise<any | null>;
   update(
     id: string,
     titulo: string,

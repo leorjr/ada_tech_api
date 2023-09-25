@@ -23,21 +23,21 @@ class SequelizeCardRepository implements CardRepository {
     return cardUpdated;
   }
 
-  async getById(id: string): Promise<any> {
+  async findById(id: string): Promise<any> {
     const card = await Card.findOne({ where: { id } });
     return card;
   }
-  async findCardByTitle(titulo: string) {
+  async findByTitle(titulo: string) {
     const card = await Card.findOne({ where: { titulo } });
     return card;
   }
 
-  async listAll() {
+  async list() {
     const cards = await Card.findAll();
     return cards;
   }
 
-  async createACard(
+  async create(
     id: string,
     titulo: string,
     conteudo: string,

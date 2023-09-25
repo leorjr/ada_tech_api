@@ -9,7 +9,7 @@ const userController = new UserController(userRepository);
 userRoutes.post(
   "/register",
   (request: Request, response: Response, next: NextFunction) =>
-    userController.registerUser(request, response, next)
+    userController.create(request, response, next)
 );
 
 userRoutes.post(

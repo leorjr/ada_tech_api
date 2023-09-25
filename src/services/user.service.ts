@@ -8,8 +8,8 @@ import { v4 as uuidv4 } from "uuid";
 class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  async registerUser(login: string, password: string) {
-    const userResponse: UserOutput | null = await this.findUserByLogin(login);
+  async create(login: string, password: string) {
+    const userResponse: UserOutput | null = await this.findByLogin(login);
 
     if (userResponse) {
       throw new AppError({ message: "User Already Exists", statusCode: 401 });
@@ -27,7 +27,7 @@ class UserService {
   }
 
   async login({ login, password }: UserInput) {
-    const userResponse: UserOutput | null = await this.findUserByLogin(login);
+    const userResponse: UserOutput | null = await this.findByLogin(login);
 
     if (!userResponse) {
       throw new AppError({ message: "User Not Found", statusCode: 401 });
@@ -50,9 +50,9 @@ class UserService {
     return token;
   }
 
-  async findUserByLogin(login: string) {
+  async findByLogin(login: string) {
     const userResponse: UserOutput | null =
-      await this.userRepository.findUserByLogin(login);
+      await this.userRepository.findByLogin(login);
 
     return userResponse;
   }

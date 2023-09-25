@@ -12,7 +12,7 @@ cardRoutes.get(
   "/",
   validateToken,
   (request: Request, response: Response, next: NextFunction) =>
-    cardController.listAll(request, response, next)
+    cardController.list(request, response, next)
 );
 
 cardRoutes.post(

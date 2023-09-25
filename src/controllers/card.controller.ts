@@ -5,11 +5,11 @@ import { CardRepository } from "../repository/card-repository";
 
 class CardController {
   constructor(private cardRepository: CardRepository) {}
-  async listAll(request: Request, response: Response, next: NextFunction) {
+  async list(request: Request, response: Response, next: NextFunction) {
     const cardService = new CardService(this.cardRepository);
 
     try {
-      const cards = await cardService.listAll();
+      const cards = await cardService.list();
 
       response.status(200).json(cards);
     } catch (error) {
@@ -26,7 +26,7 @@ class CardController {
     const cardService = new CardService(this.cardRepository);
 
     try {
-      const card = await cardService.createACard(titulo, conteudo, lista);
+      const card = await cardService.create(titulo, conteudo, lista);
       response.status(201).json(card);
     } catch (error) {
       next(error);
@@ -44,7 +44,7 @@ class CardController {
 
     const cardService = new CardService(this.cardRepository);
     try {
-      const card = await cardService.updateACard(id, titulo, conteudo, lista);
+      const card = await cardService.update(id, titulo, conteudo, lista);
       response.status(200).json(card);
     } catch (error) {
       next(error);
@@ -56,7 +56,7 @@ class CardController {
 
     const cardService = new CardService(this.cardRepository);
     try {
-      const cardListWithoutCardRemoved = await cardService.deleteACard(id);
+      const cardListWithoutCardRemoved = await cardService.delete(id);
       response.status(200).json(cardListWithoutCardRemoved);
     } catch (error) {
       next(error);

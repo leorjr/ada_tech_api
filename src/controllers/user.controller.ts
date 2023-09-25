@@ -5,7 +5,7 @@ import { UserRepository } from "../repository/user-repository";
 
 class UserController {
   constructor(private userRepository: UserRepository) {}
-  async registerUser(request: Request, response: Response, next: NextFunction) {
+  async create(request: Request, response: Response, next: NextFunction) {
     if (!UserValidation.registerUserInput(request, response)) {
       return;
     }
@@ -14,7 +14,7 @@ class UserController {
     const userService = new UserService(this.userRepository);
 
     try {
-      await userService.registerUser(login, password);
+      await userService.create(login, password);
       response.status(201).json({ message: "User created!" });
     } catch (error) {
       next(error);
