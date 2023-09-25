@@ -13,7 +13,7 @@ const Card = db.define("cards", {
     unique: true,
   },
   conteudo: {
-    type: sequelize.STRING,
+    type: sequelize.TEXT,
     allowNull: false,
   },
   lista: {
