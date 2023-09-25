@@ -37,12 +37,50 @@ class CardController {
       return;
     }
 
-    const { titulo, descricao, lista } = request.body;
+    const { titulo, conteudo, lista } = request.body;
     const cardService = new CardService(cardRepository);
 
     try {
-      const card = await cardService.createACard(titulo, descricao, lista);
+      const card = await cardService.createACard(titulo, conteudo, lista);
       response.status(201).json(card);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async update(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    const { id } = request.params;
+
+    if (!CardValidation.registerCardInput(request, response)) {
+      return;
+    }
+
+    const { titulo, conteudo, lista } = request.body;
+
+    const cardService = new CardService(cardRepository);
+    try {
+      const card = await cardService.updateACard(id, titulo, conteudo, lista);
+      response.status(200).json(card);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async delete(
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) {
+    const { id } = request.params;
+
+    const cardService = new CardService(cardRepository);
+    try {
+      const cardListWithoutCardRemoved = await cardService.deleteACard(id);
+      response.status(200).json(cardListWithoutCardRemoved);
     } catch (error) {
       next(error);
     }

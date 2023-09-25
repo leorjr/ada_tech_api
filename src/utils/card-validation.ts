@@ -5,7 +5,7 @@ class CardValidation {
   static async registerCardInput(request: Request, response: Response) {
     const registerCardBodySchema = z.object({
       titulo: z.string(),
-      descricao: z.string(),
+      conteudo: z.string(),
       lista: z.string(),
     });
 
@@ -14,8 +14,8 @@ class CardValidation {
     } catch (error) {
       if (error instanceof ZodError) {
         response
-          .status(401)
-          .json({ error: "necessário informar titulo, descrição e lista" });
+          .status(400)
+          .json({ error: "necessário informar titulo, conteudo e lista" });
         return false;
       }
     }

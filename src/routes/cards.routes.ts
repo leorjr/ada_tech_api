@@ -18,4 +18,18 @@ cardRoutes.post(
     CardController.create(request, response, next)
 );
 
+cardRoutes.put(
+  "/:id",
+  validateToken,
+  (request: Request, response: Response, next: NextFunction) =>
+    CardController.update(request, response, next)
+);
+
+cardRoutes.delete(
+  "/:id",
+  validateToken,
+  (request: Request, response: Response, next: NextFunction) =>
+    CardController.delete(request, response, next)
+);
+
 export { cardRoutes };
