@@ -2,6 +2,18 @@
 
 A ADA TECH API é uma aplicação que permite o cadastro de cards para uso geral.
 
+### Observações importantes:
+
+1. Rotas e requisito de usuário e cards:
+   Nos requisitos da aplicação, não foi solicitado rotas de criação de usuário mas, eu achei que, por estar utilizando banco de dados, poderia criar esta também.
+
+   Logo, fiz a mudança dos endpoins que foram pedidos, inserindo um prefixo `/api/` e, inseri as rotas de usuário (registro e login);
+
+   Vale ressaltar que, o mesmo segue para cards. Inseri todas as rotas de cards, logo após o prefixo `/api/`.
+
+2. Docker para rodar a o banco e a aplicação completa:
+   Não consegui colocar no docker a aplicação node, para rodar juntamente com a inicialização do container;
+
 ## Tecnologias Utilizadas
 
 A API foi desenvolvida utilizando as seguintes tecnologias:
@@ -204,4 +216,12 @@ sem corpo
     "updatedAt": "2023-09-25T17:07:41.376Z"
   }
 ]
+```
+
+### Testes
+
+Para os rodar os testes que foram implementados, basta rodar o seguinte comando:
+
+```
+  npm run test
 ```
