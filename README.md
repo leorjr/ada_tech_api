@@ -35,9 +35,15 @@ Siga os passos abaixo para baixar e executar o projeto em seu ambiente local:
 
 2. Renomeie o arquivo `.env.example` para `.env` e preencha as variáveis necessárias para o funcionamento do projeto.
 
-3. Verifique se você tem o Docker e o Docker Compose instalados em sua máquina. Se não estiverem instalados, siga as instruções de instalação nos sites oficiais do Docker e Docker Compose.
+3. Instale as dependencias do projeto, com o comando:
 
-4. Inicialize o banco de dados em um terminal usando o Docker Compose:
+```
+    npm i
+```
+
+4. Verifique se você tem o Docker e o Docker Compose instalados em sua máquina. Se não estiverem instalados, siga as instruções de instalação nos sites oficiais do Docker e Docker Compose.
+
+5. Inicialize o banco de dados em um terminal usando o Docker Compose:
 
 ```
     docker-compose up
