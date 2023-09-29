@@ -11,9 +11,6 @@ A ADA TECH API é uma aplicação que permite o cadastro de cards para uso geral
 
    Vale ressaltar que, o mesmo segue para cards. Inseri todas as rotas de cards, logo após o prefixo `/api/`.
 
-2. Docker para rodar a o banco e a aplicação completa:
-   Não consegui colocar no docker a aplicação node, para rodar juntamente com a inicialização do container;
-
 ## Tecnologias Utilizadas
 
 A API foi desenvolvida utilizando as seguintes tecnologias:
@@ -35,15 +32,9 @@ Siga os passos abaixo para baixar e executar o projeto em seu ambiente local:
 
 2. Renomeie o arquivo `.env.example` para `.env` e preencha as variáveis necessárias para o funcionamento do projeto.
 
-3. Instale as dependencias do projeto, com o comando:
+3. Verifique se você tem o Docker e o Docker Compose instalados em sua máquina. Se não estiverem instalados, siga as instruções de instalação nos sites oficiais do Docker e Docker Compose.
 
-```
-    npm i
-```
-
-4. Verifique se você tem o Docker e o Docker Compose instalados em sua máquina. Se não estiverem instalados, siga as instruções de instalação nos sites oficiais do Docker e Docker Compose.
-
-5. Inicialize o banco de dados em um terminal usando o Docker Compose:
+4. Abra um terminal e inicialize a aplicação com o seguinte comando:
 
 ```
     docker-compose up --build
@@ -220,7 +211,15 @@ sem corpo
 
 ### Testes
 
-Para os rodar os testes que foram implementados, basta rodar o seguinte comando:
+Para os rodar os testes que foram implementados, os mesmos devem ser feitos fora do container docker. Logo, será necessário instalar as dependencias do projeto em sua própria máquina. Siga os passos:
+
+1. Dentro do diretório do projeto, rode o seguinte comando, ao qual instalará todas as dependencias do projeto:
+
+```
+  npm i
+```
+
+2. Feito isso, você já poderá executar os testes com o seguinte comando:
 
 ```
   npm run test
