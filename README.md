@@ -28,13 +28,7 @@ Siga os passos abaixo para baixar e executar o projeto em seu ambiente local:
 4. Inicialize o banco de dados em um terminal usando o Docker Compose:
 
 ```
-    docker-compose up
-```
-
-5. Com o banco de dados em execução, abra outro terminal/aba e inicie o servidor da aplicação:
-
-```
-    npm run dev
+    docker-compose up --build
 ```
 
 Após seguir esses passos, sua aplicação estará rodando em sua máquina local, no endereço ao qual aparece em seu terminal e estará pronta para receber requisições;
