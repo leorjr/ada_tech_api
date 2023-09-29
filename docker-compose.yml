@@ -1,6 +1,16 @@
 version: "3"
 
 services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: leofill/ada_tech_api
+    ports:
+      - "3000:3000"
+    networks:
+      - ada_tech_api
+
   db:
     image: bitnami/postgresql
     restart: always
@@ -16,7 +26,7 @@ services:
     volumes:
       - ./postgres:/bitnami/postgresql
     networks:
-      - db-network
+      - ada_tech_api
 
   db-admin:
     image: "dpage/pgadmin4"
@@ -29,8 +39,8 @@ services:
       - db
     tty: true
     networks:
-      - db-network
+      - ada_tech_api
 
 networks:
-  db-network:
+  ada_tech_api:
     driver: bridge
